@@ -11,6 +11,7 @@
       <p>Name: {{ product.name }}</p>
       <p>Price: {{ product.price }}</p>
       <img v-bind:src="product.image_url" v-bind:alt="product.name"/>
+      <p><button v-on:click="showProductDetails(product)">Show More Details</button></p>
     </div>
   </div>
 </template>
@@ -26,7 +27,7 @@ export default {
     return {
       message: "Welcome to Vue.js!",
       products: [],
-      suppliers: [],
+      currentProduct: {},
       newProductName: "",
       newProductPrice: "",
       newProductDescription: "",
@@ -62,7 +63,12 @@ export default {
         this.newProductInstock = "";
         this.newProductSupplierId = "";
       });
+    },
+    showProductDetails(product) {
+      console.log("hello from ShowProductDetails");
+      this.currentProduct = product;
     }
+
 
 
   }
