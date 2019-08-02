@@ -25,6 +25,9 @@
           <button v-on:click="updateProduct(product)">Update the Product</button>
         </div>
         <hr>
+        <hr>
+      <button v-on:click="destroyProduct(product)">Destroy this Product</button>
+        <hr>
     </div>
   </div>
 </template>
@@ -91,6 +94,13 @@ export default {
         theProduct.description = response.data.description;
         theProduct.instock = response.data.instock;
         theProduct.supplier_id = response.data.supplier_id;
+      });
+    },
+    destroyProduct: function(theProduct) {
+      axios.delete('/api/products/' + theProduct.id, theProduct).then(response => {
+        console.log(response.data);
+        var index = this.products.indexOf(theProduct);
+        this.products.splice(index, 1);
       });
     }
   }
