@@ -10,8 +10,21 @@
     <div v-for="product in products">
       <p>Name: {{ product.name }}</p>
       <p>Price: {{ product.price }}</p>
-      <img v-bind:src="product.image_url" v-bind:alt="product.name"/>
+      <div><img v-bind:src="product.image_url" v-bind:alt="product.name"/></div>
       <p><button v-on:click="showProductDetails(product)">Show More Details</button></p>
+        <div v-if="currentProduct === product">
+          <p>Description: {{ product.description }}</p>
+          <p>In stock: {{ product.instock }}</p>
+          <p>Supplier ID: {{ product.supplier_id }}</p>
+
+          <p> Name: <input type="text" v-model="product.name"></p>
+          <p> Price: <input type="text" v-model="product.price"></p>
+          <p> Description: <input type="text" v-model="product.description"></p>
+          <p> Instock: <input type="text" v-model="product.instock"></p>
+          <p> Supplier ID: <input type="text" v-model="product.supplier_id"></p>
+          <button v-on:click="updateProduct(product)">Update the Product</button>
+        </div>
+        <hr>
     </div>
   </div>
 </template>
@@ -64,13 +77,22 @@ export default {
         this.newProductSupplierId = "";
       });
     },
-    showProductDetails(product) {
+    showProductDetails: function(product) {
       console.log("hello from ShowProductDetails");
       this.currentProduct = product;
+    },
+    updateProduct: function(theProduct) {
+      console.log("The updateProduct action says helloooooooo");
+      console.log(theProduct);
+      axios.patch('api/products/' + theProduct.id, theProduct).then(response => {
+        console.log(response.data);
+        theProduct.name = response.data.name;
+        theProduct.price = response.data.price;
+        theProduct.description = response.data.description;
+        theProduct.instock = response.data.instock;
+        theProduct.supplier_id = response.data.supplier_id;
+      });
     }
-
-
-
   }
 };
 
