@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Contact from './views/Contact.vue'
 import NewProduct from './views/ProductsNew.vue'
+import ShowProduct from './views/ProductsShow.vue'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
       path: '/products/new',
       name: 'products-new',
       component: NewProduct
+    },
+    {
+      path: '/products/:id',
+      name: 'products-show',
+      component: ShowProduct
     },
     {
       path: '/about',

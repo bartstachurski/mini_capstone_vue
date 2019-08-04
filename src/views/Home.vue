@@ -6,8 +6,9 @@
       <h2>Name: {{ product.name }}</h2>
       <p>Price: {{ product.price }}</p>
       <div><img v-bind:src="product.image_url" v-bind:alt="product.name"/></div>
-      <p><button v-on:click="showProductDetails(product)">Show More Details</button></p>
-        <div v-if="currentProduct === product">
+      <router-link v-bind:to="`/products/${product.id}`">See More Info</router-link>
+      <!-- <p><button v-on:click="showProductDetails(product)">Show More Details</button></p> -->
+        <div v-if="false">
           <p>Description: {{ product.description }}</p>
           <p>In stock: {{ product.instock }}</p>
           <p>Supplier ID: {{ product.supplier_id }}</p>
