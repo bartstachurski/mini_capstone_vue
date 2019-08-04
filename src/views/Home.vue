@@ -1,12 +1,7 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <p>Name: <input type="text" v-model="newProductName"></p>
-    <p>Price: <input type="text" v-model="newProductPrice"></p>
-    <p>Description: <input type="text" v-model="newProductDescription"></p>
-    <p>Instock: <input type="text" v-model="newProductInstock"></p>
-    <p>Supplier ID: <input type="text" v-model="newProductSupplierId"></p>
-    <button v-on:click="createProduct">Create New Product</button>
+
     <div v-for="product in products">
       <h2>Name: {{ product.name }}</h2>
       <p>Price: {{ product.price }}</p>
@@ -44,11 +39,6 @@ export default {
       message: "Coffee Goodies",
       products: [],
       currentProduct: {},
-      newProductName: "",
-      newProductPrice: "",
-      newProductDescription: "",
-      newProductInstock: "",
-      newProductSupplierId: ""
     };
   },
   created: function() {
@@ -59,27 +49,6 @@ export default {
     });
   },
   methods: {
-    createProduct: function() {
-      var newProduct = {
-        name: this.newProductName,
-        price: this.newProductPrice,
-        description: this.newProductDescription,
-        instock: this.newProductInstock,
-        supplier_id: this.newProductSupplierId
-      };
-      console.log("hello from the createProduct function");
-      console.log(newProduct);
-      axios.post('/api/products', newProduct).then(response => {
-        console.log('in the callback for create product')
-        console.log(response.data);
-        this.products.push(response.data);
-        this.newProductName = "";
-        this.newProductPrice = "";
-        this.newProductDescription = "";
-        this.newProductInstock = "";
-        this.newProductSupplierId = "";
-      });
-    },
     showProductDetails: function(product) {
       console.log("hello from ShowProductDetails");
       if (this.currentProduct === product) {
