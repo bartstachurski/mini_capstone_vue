@@ -8,7 +8,7 @@
     <p>Supplier ID: <input type="text" v-model="newProductSupplierId"></p>
     <button v-on:click="createProduct">Create New Product</button>
     <div v-for="product in products">
-      <p>Name: {{ product.name }}</p>
+      <h2>Name: {{ product.name }}</h2>
       <p>Price: {{ product.price }}</p>
       <div><img v-bind:src="product.image_url" v-bind:alt="product.name"/></div>
       <p><button v-on:click="showProductDetails(product)">Show More Details</button></p>
@@ -41,7 +41,7 @@ import axios from "axios"
 export default {
   data: function() {
     return {
-      message: "Welcome to Vue.js!",
+      message: "Coffee Goodies",
       products: [],
       currentProduct: {},
       newProductName: "",
@@ -82,7 +82,11 @@ export default {
     },
     showProductDetails: function(product) {
       console.log("hello from ShowProductDetails");
-      this.currentProduct = product;
+      if (this.currentProduct === product) {
+        this.currentProduct = {};
+      } else {
+        this.currentProduct = product;
+      }
     },
     updateProduct: function(theProduct) {
       console.log("The updateProduct action says helloooooooo");
