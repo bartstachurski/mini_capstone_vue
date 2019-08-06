@@ -7,23 +7,6 @@
       <p>Price: {{ product.price }}</p>
       <div><img v-bind:src="product.image_url" v-bind:alt="product.name"/></div>
       <router-link v-bind:to="`/products/${product.id}`">See More Info</router-link>
-      <!-- <p><button v-on:click="showProductDetails(product)">Show More Details</button></p> -->
-        <div v-if="false">
-          <p>Description: {{ product.description }}</p>
-          <p>In stock: {{ product.instock }}</p>
-          <p>Supplier ID: {{ product.supplier_id }}</p>
-
-          <p> Name: <input type="text" v-model="product.name"></p>
-          <p> Price: <input type="text" v-model="product.price"></p>
-          <p> Description: <input type="text" v-model="product.description"></p>
-          <p> Instock: <input type="text" v-model="product.instock"></p>
-          <p> Supplier ID: <input type="text" v-model="product.supplier_id"></p>
-          <button v-on:click="updateProduct(product)">Update the Product</button>
-        </div>
-        <hr>
-        <hr>
-      <button v-on:click="destroyProduct(product)">Destroy this Product</button>
-        <hr>
     </div>
   </div>
 </template>
@@ -70,7 +53,7 @@ export default {
         theProduct.supplier_id = response.data.supplier_id;
       });
     },
-    destroyProduct: function(theProduct) {
+destroyProduct: function(theProduct) {
       axios.delete('/api/products/' + theProduct.id, theProduct).then(response => {
         console.log(response.data);
         var index = this.products.indexOf(theProduct);

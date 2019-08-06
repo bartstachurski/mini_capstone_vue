@@ -6,6 +6,8 @@
     <p>Description: {{ product.description }}</p>
     <p>Instock: {{ product.instock }}</p>
     <p>Supplier: {{ product.supplier_name }}</p>
+    <button v-on:click="destroyProduct()">Destroy Product</button>
+    <router-link v-bind:to="`/products/${product.id}/edit`"> Edit Product</router-link>
   </div>
 </template>
 
@@ -28,6 +30,12 @@ export default {
       this.product = response.data;
     });
   },
-  methods: {}
+  methods: {
+    destroyProduct: function() {
+      axios.delete('/api/products/' + this.product.id).then(response => {
+        this.$router.push('/');
+      });
+    }
+  }
 };
 </script>
