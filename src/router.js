@@ -5,6 +5,7 @@ import Contact from './views/Contact.vue'
 import NewProduct from './views/ProductsNew.vue'
 import ShowProduct from './views/ProductsShow.vue'
 import ProductsEdit from './views/ProductsEdit.vue'
+import Signup from "./views/Signup.vue";
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
       path: '/products/:id/edit',
       name: 'products-edit',
       component: ProductsEdit
+    },
+    { 
+      path: "/signup",
+      name: "signup",
+      component: Signup
     },
     {
       path: '/about',
