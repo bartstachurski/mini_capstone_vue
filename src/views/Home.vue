@@ -1,9 +1,12 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <p>Search products: <input type="text" v-model="searchTerm"></p>
-    <div v-for="product in filterBy(products, searchTerm, 'name')">
-      <h2>Name: {{ product.name }}</h2>
+    <p>Search products: <input type="text" v-model="searchTerm" list="names"></p>
+    <datalist id="names">
+      <option v-for="product in products">{{ product.name }}</option>
+    </datalist>
+    <div v-for="product in filterBy(products, searchTerm, 'name', 'description')">
+      <h2>Name: {{ product.name  }}</h2>
       <p>Price: {{ product.price }}</p>
       <div><img v-bind:src="product.image_url" v-bind:alt="product.name"/></div>
       <router-link v-bind:to="`/products/${product.id}`">See More Info</router-link>
@@ -25,7 +28,8 @@ export default {
       message: "Coffee Goodies",
       products: [],
       currentProduct: {},
-      searchTerm: ""
+      searchTerm: "",
+      cost: 25
     };
   },
   created: function() {
