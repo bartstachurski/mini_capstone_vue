@@ -9,6 +9,10 @@
       <p> Supplier ID: <input type="text" v-model="NewProductSupplierId"></p>
       <input type="submit" value="Edit the Product">
     </form>
+    <h2 v-if="this.errors.length > 0">Oops! You're missing some required info.</h2>
+    <div v-for="error in errors">
+      <p>{{ error }}</p>
+    </div>
   </div>
 </template>
 
@@ -16,7 +20,7 @@
 </style>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 
 export default {
   data: function() {
@@ -26,7 +30,8 @@ export default {
       newProductPrice: "",
       newProductDescription: "",
       newProductInstock: "",
-      NewProductSupplierId: ""
+      NewProductSupplierId: "",
+      errors: []
     };
   },
   created: function() {
@@ -53,6 +58,10 @@ export default {
         console.log('in the callback for the edit recipe function');
         console.log(response.data);
         this.$router.push('/');
+      }).catch(errors => {
+        console.log('in the edit .catch');
+        console.log(errors.response);
+        this.errors = errors.response.data.errors;
       });
     }
   }
