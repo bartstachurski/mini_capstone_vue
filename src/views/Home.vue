@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-
-    <div v-for="product in products">
+    <p>Search products: <input type="text" v-model="searchTerm"></p>
+    <div v-for="product in filterBy(products, searchTerm, 'name')">
       <h2>Name: {{ product.name }}</h2>
       <p>Price: {{ product.price }}</p>
       <div><img v-bind:src="product.image_url" v-bind:alt="product.name"/></div>
@@ -15,14 +15,17 @@
 </style>
 
 <script>
-import axios from "axios"
+import axios from "axios";
+import Vue2Filters from "vue2-filters";
 
 export default {
+  mixins: [Vue2Filters.mixin],
   data: function() {
     return {
       message: "Coffee Goodies",
       products: [],
       currentProduct: {},
+      searchTerm: ""
     };
   },
   created: function() {
