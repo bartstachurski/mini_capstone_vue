@@ -2,10 +2,13 @@
   <div class="home">
     <h1>{{ message }}</h1>
     <p>Search products: <input type="text" v-model="searchTerm" list="names"></p>
+    <p><button v-on:click="setSortAttribute('name')">Sort by Name</button></p>
+    <p><button v-on:click="setSortAttribute('price')">Sort by Prices</button></p>
     <datalist id="names">
       <option v-for="product in products">{{ product.name }}</option>
     </datalist>
-    <div v-for="product in filterBy(products, searchTerm, 'name', 'description')">
+
+    <div v-for="product in orderBy(filterBy(products, this.searchTerm, 'name'), this.sortAttribute, this.sortOrder)">
       <h2>Name: {{ product.name  }}</h2>
       <p>Price: {{ product.price }}</p>
       <div><img v-bind:src="product.image_url" v-bind:alt="product.name"/></div>
@@ -29,7 +32,8 @@ export default {
       products: [],
       currentProduct: {},
       searchTerm: "",
-      cost: 25
+      sortAttribute: "",
+      sortOrder: 1, 
     };
   },
   created: function() {
@@ -47,6 +51,7 @@ export default {
       } else {
         this.currentProduct = product;
       }
+
     },
     updateProduct: function(theProduct) {
       console.log("The updateProduct action says helloooooooo");
@@ -60,12 +65,21 @@ export default {
         theProduct.supplier_id = response.data.supplier_id;
       });
     },
-destroyProduct: function(theProduct) {
+    destroyProduct: function(theProduct) {
       axios.delete('/api/products/' + theProduct.id, theProduct).then(response => {
         console.log(response.data);
         var index = this.products.indexOf(theProduct);
         this.products.splice(index, 1);
       });
+    },
+    setSortAttribute: function(attribute) {
+      console.log(attribute);
+      this.sortAttribute = attribute;
+      if (this.sortOrder === 1) {
+        this.sortOrder = -1;
+      } else {
+        this.sortOrder = 1;
+      }
     }
   }
 };
