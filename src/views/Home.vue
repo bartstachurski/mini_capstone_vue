@@ -8,12 +8,14 @@
       <option v-for="product in products">{{ product.name }}</option>
     </datalist>
 
-    <div v-for="product in orderBy(filterBy(products, this.searchTerm, 'name'), this.sortAttribute, this.sortOrder)">
-      <h2>Name: {{ product.name  }}</h2>
-      <p>Price: {{ product.price }}</p>
-      <div><img v-bind:src="product.image_url" v-bind:alt="product.name"/></div>
-      <router-link v-bind:to="`/products/${product.id}`">See More Info</router-link>
-    </div>
+    <transition-group class="row" appear enter-active-class="animated heartBeat" leave-active-class="animated lightSpeedOut">
+      <div v-bind:key="product.id" v-for="product in orderBy(filterBy(products, this.searchTerm, 'name'), this.sortAttribute, this.sortOrder)">
+        <h2>Name: {{ product.name  }}</h2>
+        <p>Price: {{ product.price }}</p>
+        <div><img v-bind:src="product.image_url" v-bind:alt="product.name"/></div>
+        <router-link v-bind:to="`/products/${product.id}`">See More Info</router-link>
+      </div>
+    </transition-group>
   </div>
 </template>
 
